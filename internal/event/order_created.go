@@ -17,7 +17,7 @@ func (e *OrderCreated) GetName() string {
 	return e.Name
 }
 
-func (e *OrderCreated) GetPayalod() interface{} {
+func (e *OrderCreated) GetPayload() interface{} {
 	return e.Payload
 }
 
