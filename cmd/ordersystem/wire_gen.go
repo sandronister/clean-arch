@@ -10,11 +10,15 @@ import (
 	"database/sql"
 	"github.com/google/wire"
 	"github.com/sandronister/clean-arch/internal/entity"
-	"github.com/sandronister/clean-arch/internal/event"
 	"github.com/sandronister/clean-arch/internal/infra/database"
+	"github.com/sandronister/clean-arch/internal/infra/event"
 	"github.com/sandronister/clean-arch/internal/infra/web"
 	"github.com/sandronister/clean-arch/internal/usecase"
 	"github.com/sandronister/clean-arch/pkg/events"
+)
+
+import (
+	_ "github.com/go-sql-driver/mysql"
 )
 
 // Injectors from wire.go:
