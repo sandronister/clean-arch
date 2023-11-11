@@ -8,6 +8,7 @@ import (
 
 	graphql_handler "github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/sandronister/clean-arch/configs"
 	"github.com/sandronister/clean-arch/internal/event/handler"
 	"github.com/sandronister/clean-arch/internal/infra/graphql/graph"
