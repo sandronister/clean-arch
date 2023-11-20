@@ -14,7 +14,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/sandronister/clean-arch/internal/infra/graphql/graph/model"
+	"github.com/sandronister/clean-arch/graph/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -255,7 +255,7 @@ func (ec *executionContext) field_Mutation_createOrder_args(ctx context.Context,
 	var arg0 *model.OrderInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalOOrderInput2ᚖgithubᚗcomᚋsandronisterᚋcleanᚑarchᚋinternalᚋinfraᚋgraphqlᚋgraphᚋmodelᚐOrderInput(ctx, tmp)
+		arg0, err = ec.unmarshalOOrderInput2ᚖgithubᚗcomᚋsandronisterᚋcleanᚑarchᚋgraphᚋmodelᚐOrderInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -342,7 +342,7 @@ func (ec *executionContext) _Mutation_createOrder(ctx context.Context, field gra
 	}
 	res := resTmp.(*model.Order)
 	fc.Result = res
-	return ec.marshalOOrder2ᚖgithubᚗcomᚋsandronisterᚋcleanᚑarchᚋinternalᚋinfraᚋgraphqlᚋgraphᚋmodelᚐOrder(ctx, field.Selections, res)
+	return ec.marshalOOrder2ᚖgithubᚗcomᚋsandronisterᚋcleanᚑarchᚋgraphᚋmodelᚐOrder(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createOrder(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2464,22 +2464,13 @@ func (ec *executionContext) unmarshalInputOrderInput(ctx context.Context, obj in
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"id", "Price", "Tax"}
+	fieldsInOrder := [...]string{"Price", "Tax"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ID = data
 		case "Price":
 			var err error
 
@@ -3312,14 +3303,14 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) marshalOOrder2ᚖgithubᚗcomᚋsandronisterᚋcleanᚑarchᚋinternalᚋinfraᚋgraphqlᚋgraphᚋmodelᚐOrder(ctx context.Context, sel ast.SelectionSet, v *model.Order) graphql.Marshaler {
+func (ec *executionContext) marshalOOrder2ᚖgithubᚗcomᚋsandronisterᚋcleanᚑarchᚋgraphᚋmodelᚐOrder(ctx context.Context, sel ast.SelectionSet, v *model.Order) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Order(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOOrderInput2ᚖgithubᚗcomᚋsandronisterᚋcleanᚑarchᚋinternalᚋinfraᚋgraphqlᚋgraphᚋmodelᚐOrderInput(ctx context.Context, v interface{}) (*model.OrderInput, error) {
+func (ec *executionContext) unmarshalOOrderInput2ᚖgithubᚗcomᚋsandronisterᚋcleanᚑarchᚋgraphᚋmodelᚐOrderInput(ctx context.Context, v interface{}) (*model.OrderInput, error) {
 	if v == nil {
 		return nil, nil
 	}
