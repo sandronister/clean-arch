@@ -4,10 +4,13 @@ import (
 	"database/sql"
 	"fmt"
 	"net"
+	"net/http"
 
-	_ "github.com/go-sql-driver/mysql"
+	graphql_handler "github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/sandronister/clean-arch/configs"
 	"github.com/sandronister/clean-arch/internal/infra/event/handler"
+	"github.com/sandronister/clean-arch/internal/infra/graphql/graph"
 	"github.com/sandronister/clean-arch/internal/infra/grpc/pb"
 	"github.com/sandronister/clean-arch/internal/infra/grpc/services"
 	"github.com/sandronister/clean-arch/internal/infra/web/webserver"
@@ -15,6 +18,9 @@ import (
 	"github.com/streadway/amqp"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+
+	//mysql
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
@@ -37,6 +43,7 @@ func main() {
 	})
 
 	createOrderUseCase := NewCreateOrderUseCase(db, eventDispatcher)
+	listOrderUserCase := NewListOrderUseCase(db)
 
 	webServer := webserver.NewWebServer(config.WebServerPort)
 	webOrderHandler := NewWebOrderHandler(db, eventDispatcher)
@@ -57,6 +64,17 @@ func main() {
 	}
 
 	go grpcServer.Serve(lis)
+
+	srv := graphql_handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{
+		CreateOrderUseCase: *createOrderUseCase,
+		ListOrderUseCase:   *listOrderUserCase,
+	}}))
+
+	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
+	http.Handle("/query", srv)
+
+	fmt.Println("Starting GraphQL server on port", config.GraphQLServerPort)
+	http.ListenAndServe(":"+config.GraphQLServerPort, nil)
 
 }
 

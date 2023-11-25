@@ -45,6 +45,7 @@ func NewCreateOrderUseCase(db *sql.DB, eventDispatcher events.EventDispatcherInt
 func NewListOrderUseCase(db *sql.DB) *usecase.ListOrderUseCase {
 	wire.Build(
 		setOrderRepositoryDependency,
+		usecase.NewListOrderUseCase,
 	)
 
 	return &usecase.ListOrderUseCase{}
