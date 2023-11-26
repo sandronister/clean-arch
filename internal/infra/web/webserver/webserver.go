@@ -8,6 +8,7 @@ import (
 )
 
 type HandleType struct {
+	Path   string
 	Method string
 	Handle http.HandlerFunc
 }
@@ -27,19 +28,19 @@ func NewWebServer(serverPort string) *WebServer {
 }
 
 func (s *WebServer) AddHandlers(path string, method string, handle http.HandlerFunc) {
-	s.Handlers[path] = HandleType{Method: method, Handle: handle}
+	s.Handlers[path+"|"+method] = HandleType{Path: path, Method: method, Handle: handle}
 }
 
 func (s *WebServer) Start() {
 	s.Router.Use(middleware.Logger)
-	for path, handler := range s.Handlers {
+	for _, handler := range s.Handlers {
 
 		if handler.Method == http.MethodPost {
-			s.Router.Post(path, handler.Handle)
+			s.Router.Post(handler.Path, handler.Handle)
 		}
 
 		if handler.Method == http.MethodGet {
-			s.Router.Get(path, handler.Handle)
+			s.Router.Get(handler.Path, handler.Handle)
 		}
 
 	}
