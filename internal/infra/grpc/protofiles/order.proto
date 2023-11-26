@@ -8,15 +8,22 @@ message CreateOrderRequest{
     float tax=3;
 }
 
-message CreateOrderResponse{
+message OrderResponse{
     string id=1;
     float price=2;
     float tax=3;
     float final_price=4;
 }
 
+message OrderList{
+    repeated OrderResponse orders =1;
+}
+
+message blank{}
+
 service OrderService{
-    rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+    rpc CreateOrder(CreateOrderRequest) returns (OrderResponse){}
+    rpc ListOrders(blank) returns (OrderList){}
 }
 
 
