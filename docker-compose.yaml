@@ -10,7 +10,7 @@ services:
       MYSQL_DATABASE: orders
       MYSQL_PASSWORD: root
     ports:
-      - 3307:3306
+      - 3306:3306
     volumes:
       - .docker/mysql:/var/lib/mysql
 
